@@ -1,0 +1,81 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+struct sjf
+{
+    int at,bt,tat,wt,pn,ct;
+}p[10];
+
+
+void main()
+{
+    float atat=0.0;
+    float awt=0.0;
+    int temp,temp1,n;
+    int remain,index,finish[10]={0},order[10],time=0;
+
+
+    printf("Enter the no of processes");
+    scanf("%d",&n);
+
+    int i,j=0;
+    // printf("Enter arrival time and burst time:");
+    for(i=0;i<n;i++)
+    {   
+        printf("Enter arrival time and burst time:");
+        scanf("%d",&p[i].at);
+        scanf("%d",&p[i].bt);
+        p[i].pn=i;
+    }
+
+
+    remain=n;
+
+    while(remain!=0)
+    {
+        index=-1;
+        for(i=0;i<n;i++)
+        {
+            if(finish[i]==0 && p[i].at<=time)
+            {
+                if(index ==-1)
+                {
+                    index=i;
+                }
+
+                else
+                {
+                    if(p[i].bt<p[index].bt)
+                    {
+                        index=i;
+                    }
+                }
+            }
+        }
+
+        if(index==-1)
+        {
+            time++;
+        }
+        else
+        {
+            finish[index]=1;
+            remain--;
+            time+=p[index].bt;
+            order[j++]=p[index].pn;
+            p[index].ct=time;
+            p[index].tat=p[index].ct-p[index].at;
+            // p[index].wt=p[index].tat-p[index].bt;
+            p[index].wt = p[index].tat - p[index].bt;
+            atat+=p[index].tat;
+            awt+=p[index].wt;
+        }
+
+
+
+    }
+
+    printf("ATAT=%f",atat/n);
+    printf("AWT=%f",awt/n);
+}

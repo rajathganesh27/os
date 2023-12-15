@@ -1,0 +1,90 @@
+# include<stdio.h>
+# include<stdlib.h>
+
+void main()
+{
+    int n,req[100],i,st,seq[100],range,j;
+    int tht=0,temp;
+
+    printf("ENTER THE RANGE");
+    scanf("%d",&range);
+
+    int a=range-1;
+
+    printf("ENTER THE NO OF REQUESTS:");
+    scanf("%d",&n);
+
+    printf("ENTER THE REQUEST QUEUE:");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&req[i]);
+    }
+
+    printf("ENTER THE INITIAL HEAD POSITION:");
+    scanf("%d",&st);
+
+    req[n]=st;
+    req[n+1]=range-1;
+    req[n+2]=0;
+    n=n+3;
+
+    for(i=0;i<n-1;i++)
+    {
+        for(j=0;j<n-1-i;j++)
+        {
+            if(req[j]>req[j+1])
+            {
+                temp=req[j];
+                req[j]=req[j+1];
+                req[j+1]=temp;
+            }
+        }
+    }
+    // for(i=0;i<n;i++)
+    // {
+    //      printf("%d:\t",req[i]);
+    // }
+
+    int pos,diff;
+    for(i=0;i<n;i++)
+    {
+        if(req[i]==st)
+        {
+            pos=i;
+            break;
+        }
+    }
+
+    // printf("POS :%d:\t",req[pos]);
+
+    //right direction
+
+    for(i=pos;i<n-1;i++)
+    {   
+        
+        diff=abs(req[i+1]-req[i]);
+        tht=tht+diff;
+        printf("Move from %d to %d with seek time %d\n", req[i], req[i+1],diff );
+
+    }
+    
+    printf("Move from %d to 0 with seek time %d\n", a,a);
+    tht=tht+a;
+
+    for(i=0;i<pos-1;i++)
+    {   
+        printf("%d\n",req[i]);
+        printf("%d\n",req[i+1]);
+        diff=abs(req[i+1]-req[i]);
+        tht=tht+diff;
+        printf("Move from %d to %d with seek time %d\n", req[i], req[i+1],diff );
+
+    }
+
+
+
+    printf("TOTAL HEAD MOVEMENT:%d\n",tht);
+
+
+    
+}

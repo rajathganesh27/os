@@ -1,0 +1,79 @@
+#include<stdio.h>
+
+#include<stdlib.h>
+#include<unistd.h>
+
+void main()
+{
+    int n,i,j;
+    struct fcfs
+    {
+        int p;
+        int bt;
+        int ct;
+        int at;
+        int wt;
+        int tat;
+        
+    }fcfs[10];
+    int temp,temp1;
+    int awt=0,atat=0;
+
+    printf("Enter number of processes:");
+    scanf("%d",&n);
+
+    printf("Enter the burst time:\n");
+
+    for(i=0;i<n;i++)
+    {
+        printf("bt[%d] :\n",i);
+        scanf("%d",&fcfs[i].bt);
+    }
+
+    
+    printf("Enter the arrival time:\n");
+
+    for(i=0;i<n;i++)
+    {
+        printf("at[%d] :\n",i);
+        scanf("%d",&fcfs[i].at);
+    }
+
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n-1-i;j++)
+        {
+            if(fcfs[j].at>fcfs[j+1].at)
+            {
+
+
+                temp1=fcfs[j].at; 
+                fcfs[j].at=fcfs[j+1].at;
+                fcfs[j+1].at=temp1;
+
+                temp=fcfs[j].bt; 
+                fcfs[j].bt=fcfs[j+1].bt;
+                fcfs[j+1].bt=temp;
+                
+            }
+        }
+    }
+    fcfs[0].ct=fcfs[0].bt;
+    for(i=1;i<n;i++)
+    {
+        fcfs[i].ct=fcfs[i].bt+fcfs[i-1].ct;
+    }
+
+    for(i=0;i<n;i++)
+    {
+        fcfs[i].tat=fcfs[i].ct-fcfs[i].at;
+        fcfs[i].wt=fcfs[i].tat-fcfs[i].bt;
+        atat=atat+fcfs[i].tat;
+        awt=awt+fcfs[i].wt;
+    }
+
+    printf("%d :::",awt/n);
+    printf("%d :::",atat/n);
+    
+
+}

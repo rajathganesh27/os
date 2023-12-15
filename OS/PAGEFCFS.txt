@@ -1,0 +1,67 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void main()
+{
+    int n,i,j,m,pg[20],fr[20],cnt=0,k=0;
+    int fnd;
+
+    printf("ENter the no of pages:");
+    scanf("%d",&n);
+
+    printf("ENTER THE REFERNECE STRING:");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&pg[i]);
+    }
+
+    printf("ENter the no of frames:");
+    scanf("%d",&m);
+
+    for(i=0;i<m;i++)
+    {
+        fr[i]=-1;
+    }
+
+    for(i=0;i<n;i++)
+    {
+        fnd=0;
+
+        for(j=0;j<m;j++)
+        {
+            if(pg[i]==fr[j])
+            {
+                fnd=1;
+            }
+        }
+
+        if(fnd==0)
+        {
+            cnt++;
+            fr[k]=pg[i];
+            k=(k+1)%m;
+
+        }
+
+        for(j=0;j<m;j++)
+        {   
+            if (fr[j]!=-1)
+            {
+                printf("%d \t",fr[j]);
+            }            
+        }
+
+        if(fnd==1)
+        {
+            printf("HIT\n");
+        }
+
+        else{
+            printf("MISS\n");
+        }
+    }
+
+    printf("PAGE FAULT:%d",cnt);
+
+
+}

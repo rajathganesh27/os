@@ -1,0 +1,36 @@
+# include<stdio.h>
+# include<stdlib.h>
+
+void main()
+{
+    int n,req[100],i,st,seq[100];
+    int tht=0;
+    printf("ENTER THE NO OF REQUESTS:");
+    scanf("%d",&n);
+
+    printf("ENTER THE REQUEST QUEUE:");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&req[i]);
+    }
+
+    printf("ENTER THE INITIAL HEAD POSITION:");
+    scanf("%d",&st);
+
+    for(i=0;i<n;i++)
+    {
+        tht=tht+abs(req[i]-st);
+        
+        seq[i]=req[i];
+        st=req[i];
+    }
+
+    printf("TOTAL HeAD MOVEMENT=%d",tht);
+    // for(i=0;i<n;i++)
+    // {
+    //     printf("%d\t",seq[i]);
+    // }
+
+
+    
+}

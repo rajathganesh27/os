@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void scan(int Ar[20], int n, int start);
+
+int main() {
+    int diskQueue[20], n, start, i, range, lastLocation;
+
+    // Input
+    printf("Enter the range: ");
+    scanf("%d", &range);
+
+    printf("Enter the size of Queue: ");
+    scanf("%d", &n);
+    printf("Enter the Queue: ");
+    for (i = 1; i <= n; i++) {
+        scanf("%d", &diskQueue[i]);
+    }
+
+    printf("Enter the initial head position: ");
+    scanf("%d", &start);
+
+    // Add initial head position to the array
+    diskQueue[0] = start;
+    ++n;
+
+    // Sort the array in ascending order
+    int tmp;
+    for (i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (diskQueue[j] > diskQueue[j + 1]) {
+                tmp = diskQueue[j];
+                diskQueue[j] = diskQueue[j + 1];
+                diskQueue[j + 1] = tmp;
+            }
+        }
+    }
+
+    // SCAN Algorithm
+    int pos, diff, seekTime = 0, current;
+
+    // Find the position of the disk to start seeking
+    for (i = 0; i < n; i++) {
+        if (diskQueue[i] == start) {
+            pos = i;
+            break;
+        }
+    }
+
+    // Start seeking to the right
+    printf("\nMovement of Cylinders\n");
+    for (i = pos; i < n - 1; i++) {
+        diff = abs(diskQueue[i + 1] - diskQueue[i]);
+        seekTime += diff;
+        printf("Move from %d to %d with seek time %d\n", diskQueue[i], diskQueue[i + 1], diff);
+    }
+    current = i; /* last element position */
+
+    // Move to the end location
+    lastLocation = range - 1;
+    printf("Move from %d to %d with seek time %d\n", diskQueue[i], lastLocation, (lastLocation - diskQueue[i]));
+    seekTime += lastLocation - diskQueue[i];
+    diskQueue[i] = lastLocation;
+
+    // Start seeking to the left
+    for (i = pos - 1; i >= 0; i--) {
+        diff = abs(diskQueue[current] - diskQueue[i]);
+        seekTime += diff;
+        printf("Move from %d to %d with seek time %d\n", diskQueue[current], diskQueue[i], diff);
+        current = i;
+    }
+
+    printf("\nTotal Seek Time: %d", seekTime);
+
+    return 0;
+}
